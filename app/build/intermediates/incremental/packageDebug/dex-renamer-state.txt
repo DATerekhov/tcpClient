@@ -1,0 +1,7 @@
+#Fri Nov 25 22:22:53 MSK 2016
+base.0=C\:\\Users\\Dmitry Terekhov\\Desktop\\testPut\\TcpClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_62a6c03f11ab38a0748e85e9e616785287c0399c
+renamed.1=classes2.dex
+renamed.0=classes.dex
+file.1=C\:\\Users\\Dmitry Terekhov\\Desktop\\testPut\\TcpClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_6c2ea3de8187d832cba1049c6f11c596ea048c8a\\classes.dex
+base.1=C\:\\Users\\Dmitry Terekhov\\Desktop\\testPut\\TcpClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run-bootstrap_6c2ea3de8187d832cba1049c6f11c596ea048c8a
+file.0=C\:\\Users\\Dmitry Terekhov\\Desktop\\testPut\\TcpClient\\app\\build\\intermediates\\transforms\\dex\\debug\\folders\\1000\\10\\instant-run_62a6c03f11ab38a0748e85e9e616785287c0399c\\classes.dex
