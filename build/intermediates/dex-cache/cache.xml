@@ -3,21 +3,30 @@
 
     <item
         is-multidex="true"
-        jar="C:\Users\Dmitry Terekhov\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\24.1.1\support-annotations-24.1.1.jar"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="3af19f153122737b372622fa6c81dd11a1c6b999">
-        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.1.1_e9cb564ae273cf46d17147e57fb3aa99b5a214ba\classes.dex" />
+        sha1="b9a1ac78ad7ef3abedc4a4b30cd92bcacb939d1f">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-24.2.1_675c1fa2858f5bf2b4384f276d2ead19fa7c2df7\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.1.1\jars\classes.jar"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="6d7d803871e3203465f71a163e7af104f807b446">
-        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.1.1_ad405e2f8089d69515df63d25e51d2b9b6cd821a\classes.dex" />
+        sha1="43b2dba6b5a0b14527961b75329d0b90025f15ea">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-24.2.1_dd638016e8bfabcc36bfe912189b6ecbfcf5ec34\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_d9fca5663f9cb9f866083faffff6e6c2e711cbf2\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -25,8 +34,17 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="255e2425b946f181a2847452daed64029fec7121">
+        sha1="5ea98fc46fc7bb9b64db0babc66c3f0fc2fa72b9">
         <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_6c2ea3de8187d832cba1049c6f11c596ea048c8a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="94bc1dfb84dcc8b6f6f8f7cc726d7b2dd39c1574">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-24.2.1_152faf3a18fff27868991e6c730d7956b1950d69\classes.dex" />
     </item>
     <item
         is-multidex="true"
@@ -34,17 +52,134 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="987d1748f5fff0de2cc6c62c9c5e7513440ad6d6">
+        sha1="001142ab8a8182fc5ec88847434e36f000f709cb">
         <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_62a6c03f11ab38a0748e85e9e616785287c0399c\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.1.1\jars\libs\internal_impl-24.1.1.jar"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\libs\internal_impl-24.2.1.jar"
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="f78c2f395cb096f9dc1dc07e729922b8fcd3c4f5">
-        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.1.1_f2b95ecaed9c2c573ee63d3dbafe47227b020596\classes.dex" />
+        sha1="935a969265b2a166b2d20415423f5f6e90fe16e0">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_11143d36b56fd91c9f29ca22e6745ebdf7bf0900\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_5623ce4152f89fd3c3ac74d3810c033bfd309141\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="327f68d58bb39fb8b585150596b313541f8fdb87">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v13-24.1.1_686d732a018bc3174599ce448cdb1a2d8b9b794f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\24.1.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="4add8aa95c9f4e9a2ad64b7e2bf08e97e28955c1">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-24.1.1_aa0df83a67e86036d62aca158223682a27278363\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d5c731fc64c03dfe04d51134955b483551c35849">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-24.2.1_9bf9b944d4051a2164d33ccc4b85ae72eb3d2a9c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="867dad63c33388ff8c7644b236579355036d075f">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_9b2cf66e58505c77c6ed9255d6bac8bf4cecf573\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-fragment\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="5f64d657e838e8375135c0f6057a7ff8fab6a50e">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_e4cb7b3e1bcb9b866d0a4760aca4596b8bcfff9b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="fbf8da429efd5ad21e02e3e5ecaa1efc4167878d">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_000973bfe6bb415bc0691c11e279d3e96e81fb15\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_06bed5b4f8c7787adf5ba7539c1fea45408f8fce\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-v13\24.1.1\jars\libs\internal_impl-24.1.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="ca74722504f90166103d01edcdfdb93192eb1cba">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.1.1_0e125c7981a07c2ed75d5dc3d6c8a48e2ca351ff\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="09b462bbcb77650284bd6614f1a32f360ef369f8">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-24.2.1_65a42879bce775a71a1acc3d70112b727d77c0c3\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-v4\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-24.2.1_82153da66e27a9aa97c115dcef86295b8156a30c\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_ca7961af090284a20f8015e584c6f522066fc700\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\24.2.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="24.0.2"
+        sha1="9c4c3bc902450c39ed54de170db4fb12aea20a35">
+        <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-24.2.1_c5acbfa0f3d808f8e6d8fed687eb747cb296e1d0\classes.dex" />
     </item>
 
 </items>

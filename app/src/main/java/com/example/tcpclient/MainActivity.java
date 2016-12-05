@@ -1,5 +1,6 @@
 package com.example.tcpclient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -10,14 +11,19 @@ import android.util.Xml;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
 	//For debug
 	private final String TAG = "MainActivity";
+
+	SharedPreferences sPref;
 
 	//About the ui controls
 	private EditText edit_ip = null;
@@ -26,6 +32,8 @@ public class MainActivity extends Activity {
 	private EditText edit_receive = null;
 	private EditText edit_send = null;
 	private Button btn_send = null;
+	private TextView tvIP;
+	private TextView tvPort;
 	//private boolean isConnected = false;
 
 	//About the socket
@@ -33,9 +41,6 @@ public class MainActivity extends Activity {
 	ClientThread clientThread;
 
 
-	/**
-	 * Called when the activity is first created.
-	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,35 +53,21 @@ public class MainActivity extends Activity {
 		btn_connect = (Button) findViewById(R.id.btn_connect);
 		btn_send = (Button) findViewById(R.id.btn_send);
 
+		tvIP = (TextView)findViewById(R.id.txt_ip);
+		tvPort = (TextView)findViewById(R.id.txt_port);
+
 		init();
-
-		//Click here to connect
-		btn_connect.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				String ip = edit_ip.getText().toString();
-				String port = edit_port.getText().toString();
-
-				Log.d(TAG, ip + port);
-
-				clientThread = new ClientThread(handler, ip, port);
-				new Thread(clientThread).start();
-				Log.d(TAG, "clientThread is start!!");
-				if (clientThread.isConnect) {
-					Toast.makeText(MainActivity.this, "isConnected", Toast.LENGTH_SHORT).show();
-					btn_connect.setText(R.string.btn_disconnect);
-				}
-			}
-		});
+		Animat();
 
 		//Click here to Send Msg to Server
 		btn_send.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
+				if (clientThread.isConnect) {
+					Toast.makeText(MainActivity.this, "isConnected", Toast.LENGTH_SHORT).show();
+					btn_connect.setText(R.string.btn_disconnect);
+				}
 
 				try {
 					Message msg = new Message();
@@ -92,12 +83,18 @@ public class MainActivity extends Activity {
 		});
 	}
 
+	private void saveIpAndPort() {
+		sPref = getPreferences(MODE_PRIVATE);
+		SharedPreferences.Editor editor = sPref.edit();
+		editor.putString("IP", edit_ip.getText().toString());
+		editor.putString("PORT", edit_port.getText().toString());
+		editor.apply();
+	}
 
 	private void init() {
-		//Load the datas from share preferences
-		SharedPreferences sharedata = getSharedPreferences("data", 0);
-		String ip = sharedata.getString("ip", "192.168.1.35");
-		String port = sharedata.getString("port", "8888");
+		sPref = getPreferences(MODE_PRIVATE);
+		String ip = sPref.getString("IP", "192.168.1.35");
+		String port = sPref.getString("PORT", "8888");
 		edit_ip.setText(ip);
 		edit_port.setText(port);
 
@@ -111,6 +108,27 @@ public class MainActivity extends Activity {
 		};
 	}
 
+	private void Animat(){
+		Animation anim1 = null;
+		Animation anim2 = null;
+		Animation anim5 = null;
+		Animation anim6 = null;
+		Animation bAnim = null;
+
+		anim1 = AnimationUtils.loadAnimation(this, R.anim.translate);
+		anim2 = AnimationUtils.loadAnimation(this, R.anim.translate2);
+		anim5 = AnimationUtils.loadAnimation(this, R.anim.translate5);
+		anim6 = AnimationUtils.loadAnimation(this, R.anim.translate6);
+
+		bAnim = AnimationUtils.loadAnimation(this, R.anim.myscale);
+		btn_connect.startAnimation(bAnim);
+
+		tvIP.startAnimation(anim1);
+		tvPort.startAnimation(anim2);
+		edit_ip.startAnimation(anim5);
+		edit_port.startAnimation(anim6);
+	}
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -118,9 +136,27 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	public boolean onDestory() {
-		return true;
-
+	@Override
+	protected void onDestroy() {
+		saveIpAndPort();
+		super.onDestroy();
 	}
 
+	public void bConnect_Click(View view) {
+		String ip = edit_ip.getText().toString();
+		String port = edit_port.getText().toString();
+
+		saveIpAndPort();
+
+		Log.d(TAG, ip + port);
+
+		clientThread = new ClientThread(handler, ip, port);
+		new Thread(clientThread).start();
+		Log.d(TAG, "clientThread is start!!");
+	}
+
+	public void test_Click(View view) {
+		Intent intent = new Intent(this, MediaRecorderActivity.class);
+		startActivity(intent);
+	}
 }
