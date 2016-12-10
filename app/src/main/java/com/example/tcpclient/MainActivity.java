@@ -1,43 +1,48 @@
 package com.example.tcpclient;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.util.Log;
-import android.util.Xml;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+import java.util.concurrent.TimeUnit;
 
-	//For debug
+public class MainActivity extends Activity {
 	private final String TAG = "MainActivity";
+	private final int REQUEST_CODE_GALLERY = 1;
 
 	SharedPreferences sPref;
 
-	//About the ui controls
 	private EditText edit_ip = null;
 	private EditText edit_port = null;
-	private Button btn_connect = null;
+	private Button btn_connect = null, bGallery;
 	private EditText edit_receive = null;
 	private EditText edit_send = null;
 	private Button btn_send = null;
 	private TextView tvIP;
 	private TextView tvPort;
-	//private boolean isConnected = false;
+	private TextView tvGalleryChoice;
+	ImageView imageView;
 
 	//About the socket
-	Handler handler;    //////////////////////
+	Handler handler;
 	ClientThread clientThread;
 
 
@@ -53,13 +58,16 @@ public class MainActivity extends Activity {
 		btn_connect = (Button) findViewById(R.id.btn_connect);
 		btn_send = (Button) findViewById(R.id.btn_send);
 
-		tvIP = (TextView)findViewById(R.id.txt_ip);
-		tvPort = (TextView)findViewById(R.id.txt_port);
+		bGallery = (Button) findViewById(R.id.bGallery);
+		tvGalleryChoice = (TextView)findViewById(R.id.tvGalleryChoice);
+		imageView = (ImageView)findViewById(R.id.imageView);
+
+		tvIP = (TextView) findViewById(R.id.txt_ip);
+		tvPort = (TextView) findViewById(R.id.txt_port);
 
 		init();
 		Animat();
 
-		//Click here to Send Msg to Server
 		btn_send.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -83,6 +91,12 @@ public class MainActivity extends Activity {
 		});
 	}
 
+	@Override
+	protected void onDestroy() {
+		saveIpAndPort();
+		super.onDestroy();
+	}
+
 	private void saveIpAndPort() {
 		sPref = getPreferences(MODE_PRIVATE);
 		SharedPreferences.Editor editor = sPref.edit();
@@ -102,13 +116,13 @@ public class MainActivity extends Activity {
 			@Override
 			public void handleMessage(Message msg) {
 				if (msg.what == 0x123) {
-					edit_receive.setText(msg.obj.toString());/////////////////////////////
+					edit_receive.setText(msg.obj.toString());
 				}
 			}
 		};
 	}
 
-	private void Animat(){
+	private void Animat() {
 		Animation anim1 = null;
 		Animation anim2 = null;
 		Animation anim5 = null;
@@ -131,15 +145,16 @@ public class MainActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
-	@Override
-	protected void onDestroy() {
-		saveIpAndPort();
-		super.onDestroy();
+	void Sleep(int i) {
+		try {
+			TimeUnit.MILLISECONDS.sleep(i);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void bConnect_Click(View view) {
@@ -153,10 +168,49 @@ public class MainActivity extends Activity {
 		clientThread = new ClientThread(handler, ip, port);
 		new Thread(clientThread).start();
 		Log.d(TAG, "clientThread is start!!");
+
+		Handler handler = new Handler();
+		handler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					Message msg = new Message();
+					msg.what = 0x840;
+					msg.obj = "Nickname";
+					clientThread.sendHandler.sendMessage(msg);
+					Log.d(TAG, "Message nickname send!");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}, 1555);
+
 	}
 
 	public void test_Click(View view) {
 		Intent intent = new Intent(this, MediaRecorderActivity.class);
 		startActivity(intent);
+	}
+
+	public void galleryChoiceClick(View view) {
+
+		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+		photoPickerIntent.setType("image/*");
+		startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+
+		switch (requestCode) {
+			case REQUEST_CODE_GALLERY:
+				if (resultCode == RESULT_OK) {
+					Uri imageUri = imageReturnedIntent.getData();
+					tvGalleryChoice.setText(imageUri.getEncodedPath());
+
+					imageView.setImageURI(imageUri);
+				}
+		}
 	}
 }

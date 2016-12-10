@@ -1,8 +1,11 @@
 package com.example.tcpclient;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -19,7 +22,6 @@ import android.widget.EditText;
 
 public class ClientThread implements Runnable
 {
-	//For debug
 	private final String TAG = "ClientThread";
 	
 	private Socket socket;
@@ -27,18 +29,17 @@ public class ClientThread implements Runnable
 	private int port;
 	private Handler receiveHandler;
 	public Handler sendHandler;
-	BufferedReader bufferedReader;
 	private InputStream inputStream;
 	private OutputStream outputStream;
-	public boolean isConnect = false; ///////////////////////////
+	public boolean isConnect = false;
 
 	public ClientThread(Handler handler, String ip, String port) {
-		// TODO Auto-generated constructor stub
 		this.receiveHandler = handler;
 		this.ip = ip;
 		this.port = Integer.parseInt(port);
 		Log.d(TAG, "ClientThread's construct is OK!!");
 	}
+
 	public ClientThread()
 	{
 		Log.d(TAG, "It is may be construct's problem...");
@@ -107,12 +108,20 @@ public class ClientThread implements Runnable
 					{
 						try
 						{
-							outputStream.write(msg.obj.toString().getBytes());/////////////////
+							outputStream.write(msg.obj.toString().getBytes());
 							outputStream.flush();
 						}
 						catch (Exception e)
 						{
 							Log.d(TAG, e.getMessage());
+							e.printStackTrace();
+						}
+					}
+					if (msg.what == 0x840){
+						try {
+							outputStream.write(msg.obj.toString().getBytes());
+							outputStream.flush();
+						} catch (IOException e){
 							e.printStackTrace();
 						}
 					}
