@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.app.Activity;
@@ -22,11 +23,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends Activity {
 	private final String TAG = "MainActivity";
-	private final int REQUEST_CODE_GALLERY = 1;
 
 	SharedPreferences sPref;
 
@@ -169,29 +173,32 @@ public class MainActivity extends Activity {
 		new Thread(clientThread).start();
 		Log.d(TAG, "clientThread is start!!");
 
-		Handler handler = new Handler();
+		Handler handler = new Handler();	//отложенный вызов
 		handler.postDelayed(new Runnable() {
 			@Override
 			public void run() {
 				try {
-					Message msg = new Message();
-					msg.what = 0x840;
-					msg.obj = "Nickname";
-					clientThread.sendHandler.sendMessage(msg);
-					Log.d(TAG, "Message nickname send!");
+					if (clientThread.isConnect) {
+						Message msg = new Message();
+						msg.what = 0x840;
+						msg.obj = "Nickname";
+						clientThread.sendHandler.sendMessage(msg);
+						Log.d(TAG, "Message nickname send!");
+					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		}, 1555);
-
+		}, 1500);
+		Intent intent = new Intent(this, ChatActivity.class);
+		startActivity(intent);
 	}
 
 	public void test_Click(View view) {
 		Intent intent = new Intent(this, MediaRecorderActivity.class);
 		startActivity(intent);
 	}
-
+/*
 	public void galleryChoiceClick(View view) {
 
 		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -212,5 +219,5 @@ public class MainActivity extends Activity {
 					imageView.setImageURI(imageUri);
 				}
 		}
-	}
+	}*/
 }

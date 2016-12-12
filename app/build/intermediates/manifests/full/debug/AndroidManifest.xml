@@ -39,6 +39,8 @@
             android:name="com.example.tcpclient.MediaRecorderActivity"
             android:screenOrientation="landscape" >
         </activity>
+        <activity android:name="com.example.tcpclient.ChatActivity" >
+        </activity>
     </application>
 
 </manifest>

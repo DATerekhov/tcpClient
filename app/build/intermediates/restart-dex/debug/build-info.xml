@@ -5,47 +5,40 @@
     density="xhdpi"
     format="8"
     plugin-version="2.2.1"
-    timestamp="551117047558058"
+    timestamp="16178905816004"
     token="-6967921358871934764"
-    verifier="COLD_SWAP_REQUESTED" >
+    verifier="METHOD_ADDED" >
 
     <task
         name="javac"
-        duration="145" />
+        duration="411" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="31" />
+        duration="45" />
     <task
         name="verifier"
-        duration="3" />
+        duration="4" />
 
     <artifact
         location="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
         type="DEX" />
 
     <build
-        timestamp="551003362873308"
-        verifier="BINARY_MANIFEST_FILE_CHANGE" >
+        timestamp="14592250771453"
+        verifier="FULL_BUILD_REQUESTED" >
         <artifact
             location="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\outputs\apk\app-debug.apk"
             type="MAIN" />
     </build>
     <build
-        timestamp="551117047558058"
-        verifier="COLD_SWAP_REQUESTED" >
+        timestamp="16178905816004"
+        verifier="METHOD_ADDED" >
         <artifact
             location="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\5\slice_7\classes.dex"
             type="DEX" />
-    </build>
-    <build
-        timestamp="1910594405608936"
-        verifier="MANIFEST_FILE_CHANGE" >
-        <artifact
-            location="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\outputs\apk\app-debug.apk"
-            type="MAIN" />
     </build>
 
 </instant-run>

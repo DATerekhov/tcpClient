@@ -32,7 +32,6 @@
             android:hint="@string/edit_ip"
             >
 
-            <requestFocus />
         </EditText>
 
         <TextView
@@ -95,25 +94,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/bTest"
             android:onClick="test_Click"/>
-
-        <Button
-            android:text="takeImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bGallery"
-            android:onClick="galleryChoiceClick"/>
-
-        <TextView
-            android:text="TextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/tvGalleryChoice"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:srcCompat="@android:color/darker_gray"
-            android:id="@+id/imageView"/>
 
     </LinearLayout>
     </ScrollView>
