@@ -1897,7 +1897,7 @@ containing a value of this type.
         public static final int notification_template_icon_bg=0x7f020054;
     }
     public static final class id {
-        public static final int LinearLayout1=0x7f0a0058;
+        public static final int LinearLayout1=0x7f0a0055;
         public static final int action0=0x7f0a0066;
         public static final int action_bar=0x7f0a0045;
         public static final int action_bar_activity_content=0x7f0a0000;
@@ -1919,12 +1919,12 @@ containing a value of this type.
         public static final int add=0x7f0a0013;
         public static final int alertTitle=0x7f0a0033;
         public static final int always=0x7f0a001d;
-        public static final int bGallery=0x7f0a0055;
-        public static final int bTest=0x7f0a0063;
+        public static final int bGallery=0x7f0a0061;
+        public static final int bTest=0x7f0a0060;
         public static final int beginning=0x7f0a001a;
         public static final int bottom=0x7f0a0022;
-        public static final int btn_connect=0x7f0a005d;
-        public static final int btn_send=0x7f0a0062;
+        public static final int btn_connect=0x7f0a005a;
+        public static final int btn_send=0x7f0a005f;
         public static final int buttonPanel=0x7f0a002e;
         public static final int button_capture=0x7f0a0065;
         public static final int cancel_action=0x7f0a0067;
@@ -1937,11 +1937,11 @@ containing a value of this type.
         public static final int decor_content_parent=0x7f0a0043;
         public static final int default_activity_button=0x7f0a002a;
         public static final int disableHome=0x7f0a000c;
-        public static final int edit_ip=0x7f0a005a;
-        public static final int edit_port=0x7f0a005c;
+        public static final int edit_ip=0x7f0a0057;
+        public static final int edit_port=0x7f0a0059;
         public static final int edit_query=0x7f0a0047;
-        public static final int edit_receive=0x7f0a005f;
-        public static final int edit_send=0x7f0a0061;
+        public static final int edit_receive=0x7f0a005c;
+        public static final int edit_send=0x7f0a005e;
         public static final int end=0x7f0a001b;
         public static final int end_padder=0x7f0a0072;
         public static final int expand_activities_button=0x7f0a0028;
@@ -1951,7 +1951,7 @@ containing a value of this type.
         public static final int icon=0x7f0a002c;
         public static final int ifRoom=0x7f0a001f;
         public static final int image=0x7f0a0029;
-        public static final int imageView=0x7f0a0057;
+        public static final int imageView=0x7f0a0063;
         public static final int info=0x7f0a0071;
         public static final int line1=0x7f0a006b;
         public static final int line3=0x7f0a006f;
@@ -2004,11 +2004,11 @@ containing a value of this type.
         public static final int title_template=0x7f0a0032;
         public static final int top=0x7f0a0023;
         public static final int topPanel=0x7f0a0031;
-        public static final int tvGalleryChoice=0x7f0a0056;
-        public static final int txt_ip=0x7f0a0059;
-        public static final int txt_port=0x7f0a005b;
-        public static final int txt_receive=0x7f0a005e;
-        public static final int txt_send=0x7f0a0060;
+        public static final int tvGalleryChoice=0x7f0a0062;
+        public static final int txt_ip=0x7f0a0056;
+        public static final int txt_port=0x7f0a0058;
+        public static final int txt_receive=0x7f0a005b;
+        public static final int txt_send=0x7f0a005d;
         public static final int up=0x7f0a0008;
         public static final int useLogo=0x7f0a0012;
         public static final int withText=0x7f0a0021;
