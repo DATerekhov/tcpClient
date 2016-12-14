@@ -26,13 +26,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends Activity {
@@ -42,6 +46,7 @@ public class MainActivity extends Activity {
 	private final int REQUEST_CODE_GALLERY = 1;
 
 	SharedPreferences sPref;
+	private static Uri imageUri = null;
 
 	private EditText edit_ip = null;
 	private EditText edit_port = null;
@@ -52,12 +57,13 @@ public class MainActivity extends Activity {
 	private Button btn_send = null;
 	private TextView tvIP;
 	private TextView tvPort;
+	private Button bSendImage = null;
 	TextView tvGalleryChoice;
 	ImageView imageView;
 
 	//About the socket
 	Handler handler;
-	ClientThread clientThread;
+	static ClientThread clientThread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,47 +75,31 @@ public class MainActivity extends Activity {
 		edit_receive = (EditText) findViewById(R.id.edit_receive);
 		btn_connect = (Button) findViewById(R.id.btn_connect);
 		btn_send = (Button) findViewById(R.id.btn_send);
-		edit_send = (EditText)findViewById(R.id.edit_send);
+		edit_send = (EditText) findViewById(R.id.edit_send);
 		tvIP = (TextView) findViewById(R.id.txt_ip);
 		tvPort = (TextView) findViewById(R.id.txt_port);
 		tvGalleryChoice = (TextView) findViewById(R.id.tvGalleryChoice);
 		imageView = (ImageView) findViewById(R.id.imageView);
+		bSendImage = (Button)findViewById(R.id.bSendImage);
 
 		init();
 		Animat();
-
-		btn_send.setOnClickListener(new View.OnClickListener() {
-
-			@Override
-			public void onClick(View arg0) {
-				if (clientThread.isConnect) {
-					Toast.makeText(MainActivity.this, "isConnected", Toast.LENGTH_SHORT).show();
-					btn_connect.setText(R.string.btn_disconnect);
-				}
-
-				try {
-					Message msg = new Message();
-					msg.what = 0x852;
-					msg.obj = edit_send.getText().toString();
-					clientThread.sendHandler.sendMessage(msg);
-					edit_send.setText("");
-					/*String imagePath = "/storage/emulated/0/DCIM/Camera/P_20161210_121416.jpg";
-					Message msg = new Message();
-					msg.what = 0x800;
-					msg.obj = imagePath;
-					clientThread.sendHandler.sendMessage(msg);*/
-				} catch (Exception e) {
-					Log.d(TAG, e.getMessage());
-					e.printStackTrace();
-				}
-			}
-		});
 	}
 
 	@Override
 	protected void onDestroy() {
 		saveIpAndPort();
 		super.onDestroy();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 	}
 
 	void writeFileSD() {
@@ -202,13 +192,12 @@ public class MainActivity extends Activity {
 		switch (requestCode) {
 			case REQUEST_CODE_GALLERY:
 				if (resultCode == RESULT_OK) {
-					Uri imageUri = imageReturnedIntent.getData();
-					tvGalleryChoice.setText(imageUri.getEncodedPath());
+					imageUri = null;
+					imageUri = imageReturnedIntent.getData();
 					imageView.setImageURI(imageUri);
-
 					String KEK = getRealPathFromURI(this, imageUri);
-					File sdPath = Environment.getExternalStorageDirectory();
-					Log.d(TAG, "onActivityResult: " + sdPath.getPath());
+					tvGalleryChoice.setText(KEK);
+
 					Log.d(TAG, "onActivityResult: " + KEK);
 					File file = new File(KEK);
 					if (file.exists()) {
@@ -279,6 +268,91 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	static byte[] FileToBytes(String path)
+	{
+		ByteArrayOutputStream out = null;
+		InputStream input = null;
+		try
+		{
+			out = new ByteArrayOutputStream();
+			input = new BufferedInputStream(new FileInputStream(path));
+			int data = 0;
+			while ((data = input.read()) != -1)
+			{
+				out.write(data);
+			}
+		}
+		catch (FileNotFoundException ex)
+		{
+			ex.printStackTrace();
+		}
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(input != null)
+				{
+					input.close();
+				}
+
+				if(out != null)
+				{
+					out.close();
+				}
+			}
+			catch (IOException ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+
+		return out.toByteArray();
+	}
+	static byte[] getBytes(int v)
+	{
+		byte[] writeBuffer = new byte[4];
+		writeBuffer[3] = (byte) ((v >> 24) & 0xFF);
+		writeBuffer[2] = (byte) ((v >> 16) & 0xFF);
+		writeBuffer[1] = (byte) ((v >> 8) & 0xFF);
+		writeBuffer[0] = (byte) ((v >> 0) & 0xFF);
+		return writeBuffer;
+	}
+	static int toInt32(byte[] data, int offset)
+	{
+		return (data[offset] & 0xFF) | ((data[offset + 1] & 0xFF) << 8)
+				| ((data[offset + 2] & 0xFF) << 16)
+				| ((data[offset + 3] & 0xFF) << 24);
+	}
+	static byte[] MergeArrays(byte[] first, byte[] second)
+	{
+		byte[] res;
+		if (first != null && second != null)
+		{
+			res = new byte[first.length + second.length];
+			for (int i = 0; i < first.length; i++)
+			{
+				res[i] = first[i];
+			}
+
+			int j = first.length;
+			for (int i = 0; i < second.length; i++)
+			{
+				res[j++] = second[i];
+			}
+
+			return res;
+		}
+		else
+		{
+			return null;
+		}
+
+	}
+
 	public void bConnect_Click(View view) {
 		String ip = edit_ip.getText().toString();
 		String port = edit_port.getText().toString();
@@ -302,14 +376,65 @@ public class MainActivity extends Activity {
 						msg.obj = "Nickname";
 						clientThread.sendHandler.sendMessage(msg);
 						Log.d(TAG, "Message nickname send!");
+
+						btn_connect.setText(R.string.btn_disconnect);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		}, 1500);
+	}
 
-		//Intent intent = new Intent(this, ChatActivity.class);
-		//startActivity(intent);
+	public void bSend_Click(View view) {
+		if (clientThread.isConnect) {
+			Toast.makeText(MainActivity.this, "isConnected", Toast.LENGTH_SHORT).show();
+			btn_connect.setText(R.string.btn_disconnect);
+		}
+		//посылается картинка
+		/*if(edit_send.getText().toString().equals("1")) {
+			getRealPathFromURI(this, imageUri);
+			Message msg = new Message();
+			msg.what = 0x800;
+			msg.obj = getRealPathFromURI(this, imageUri);
+			clientThread.sendHandler.sendMessage(msg);
+			edit_send.setText("");
+		}else { //сообщение чата*/
+			try {
+				Message msg = new Message();
+				msg.what = 0x852;
+				msg.obj = edit_send.getText().toString();
+				clientThread.sendHandler.sendMessage(msg);
+				edit_send.setText("");
+			} catch (Exception e) {
+				Log.d(TAG, e.getMessage());
+				e.printStackTrace();
+			//}
+		}
+	}
+
+	public void bSendImage_Click(View view) {
+		if (clientThread == null) {
+			Toast.makeText(MainActivity.this, "is not Connected", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		if(imageUri == null) {
+			Toast.makeText(this, "Картинка не выбрана", Toast.LENGTH_SHORT).show();
+			return;
+		}
+
+		String imagePath = getRealPathFromURI(this, imageUri);
+
+		File file = new File(imagePath);
+		if (file.exists()) {
+			Log.d(TAG, "onActivityResult: File Exist");
+		} else{
+			Log.d(TAG, "onActivityResult: File Not Exist");
+		}
+
+		Message msg = new Message();
+		msg.what = 0x800;
+		msg.obj = imagePath;
+		clientThread.sendHandler.sendMessage(msg);
 	}
 }

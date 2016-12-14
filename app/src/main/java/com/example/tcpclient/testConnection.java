@@ -21,7 +21,7 @@ public class testConnection {
 	static Socket client;
 	static InputStream is;
 	static OutputStream os;
-
+/*
 	public static void main(String[] args) {
 
 		try
@@ -45,14 +45,13 @@ public class testConnection {
 		{
 			Disconnect();
 		}
-	}
+	}*/
 	// отправка сообщений
 	static void SendMessage()
 	{
 		File file = new File("buch.djvu");
 		byte[] temp;
 		byte[] size;
-
 
 		while (true)
 		{

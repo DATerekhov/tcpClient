@@ -86,7 +86,8 @@
             android:id="@+id/btn_send"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_send" />
+            android:text="@string/btn_send"
+            android:onClick="bSend_Click"/>
 
         <Button
             android:text="testCamera"
@@ -113,6 +114,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"/>
+
+        <Button
+            android:text="SendImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/bSendImage"
+            android:onClick="bSendImage_Click"/>
 
     </LinearLayout>
     </ScrollView>

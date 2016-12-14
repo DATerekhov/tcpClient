@@ -81,7 +81,7 @@ public class ClientThread implements Runnable
 							}
 							if(readSize == 0)continue;
 
-							stringBuilder.append(new String(buffer, 0, readSize)); ///////////////////////
+							stringBuilder.append(new String(buffer, 0, readSize));
 							Message msg = new Message();
 							msg.what = 0x123;
 							msg.obj = stringBuilder.toString();
@@ -99,38 +99,63 @@ public class ClientThread implements Runnable
 			
 			//To Send Msg to Server
 			Looper.prepare();
-			sendHandler = new Handler()
-			{
+			sendHandler = new Handler() {
 				@Override
-				public void handleMessage(Message msg)
-				{
-					if (msg.what == 0x852) {
+				public void handleMessage(Message msg) {
+					if (msg.what == 0x852) { //сообщение чата
 						try {
-							outputStream.write(msg.obj.toString().getBytes());
+							byte[] mes = msg.obj.toString().getBytes();
+							byte[] mesSize = MainActivity.getBytes(mes.length);
+
+							outputStream.write(mesSize);
+							outputStream.write(mes);
 							outputStream.flush();
-						}
-						catch (Exception e) {
+						} catch (Exception e) {
 							Log.d(TAG, e.getMessage());
 							e.printStackTrace();
 						}
 					}
-					if (msg.what == 0x840){
-						try {
-							outputStream.write(msg.obj.toString().getBytes());
+					if (msg.what == 0x840) {
+						try { //сообщение отправки ника на сервер
+							byte[] mes = msg.obj.toString().getBytes();
+							byte[] mesSize = MainActivity.getBytes(mes.length);
+
+							outputStream.write(mesSize);
+							outputStream.write(mes);
 							outputStream.flush();
-						} catch (IOException e){
+						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					}
-					if (msg.what == 0x800){
-						try {
-							File fileImage = new File(msg.obj.toString());
-							if (fileImage.exists()){
-								byte[] bytesImage = FileBitConvert.FileToBytes(msg.obj.toString());
-								outputStream.write(bytesImage.length);
-								outputStream.flush();
+					if (msg.what == 0x800) {
+						try {	//отправка выбранного из галереи
+							String imagePath = msg.obj.toString();
+							File file = new File(imagePath);
+
+							if (file.exists()) {
+								Log.d(TAG, "handleMessage: File exists");
+							} else {
+								Log.d(TAG, "handleMessage: File not exists");
 							}
-						} catch (IOException e){
+
+							byte[] temp;
+							byte[] size;
+
+							Log.d(TAG, "handleMessage: sending Image");
+
+							try {
+
+								temp = MainActivity.FileToBytes(imagePath);
+								size = MainActivity.getBytes(temp.length);
+
+								outputStream.write(size, 0, size.length);
+								outputStream.write(temp, 0, temp.length);
+								outputStream.flush();
+							} catch (IOException ex) {
+								ex.printStackTrace();
+							}
+
+						} catch (Exception e) {
 							e.printStackTrace();
 						}
 					}
