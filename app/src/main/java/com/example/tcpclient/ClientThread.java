@@ -105,13 +105,13 @@ public class ClientThread implements Runnable
 					if (msg.what == 0x852) { //сообщение чата
 						try {
 							byte[] mes = msg.obj.toString().getBytes();
-							byte[] mesSize = MainActivity.getBytes(mes.length);
-							byte[] mesCode = MainActivity.getBytes(852);
+							byte[] mesSize = Converter.getBytes(mes.length);
+							byte[] mesCode = Converter.getBytes(852);
 
 							outputStream.write(mesCode, 0, mesCode.length);
-							MainActivity.Sleep(100);
+							Sleeper.milliseconds(100);
 							outputStream.write(mesSize, 0, mesSize.length);
-							MainActivity.Sleep(100);
+							Sleeper.milliseconds(100);
 							outputStream.write(mes, 0, mes.length);
 							outputStream.flush();
 						} catch (Exception e) {
@@ -122,7 +122,7 @@ public class ClientThread implements Runnable
 					if (msg.what == 0x840) {
 						try { //сообщение отправки ника на сервер
 							byte[] mes = msg.obj.toString().getBytes();
-							byte[] mesSize = MainActivity.getBytes(mes.length);
+							byte[] mesSize = Converter.getBytes(mes.length);
 
 							outputStream.write(mesSize, 0, mesSize.length);
 							outputStream.write(mes, 0, mes.length);
@@ -144,18 +144,18 @@ public class ClientThread implements Runnable
 
 							byte[] temp;
 							byte[] size;
-							byte[] mesCode = MainActivity.getBytes(800);
+							byte[] mesCode = Converter.getBytes(800);
 
 							Log.d(TAG, "handleMessage: sending Image");
 
 							try {
-								temp = MainActivity.FileToBytes(imagePath);
-								size = MainActivity.getBytes(temp.length);
+								temp = Converter.FileToBytes(imagePath);
+								size = Converter.getBytes(temp.length);
 
 								outputStream.write(mesCode, 0, mesCode.length);
-								MainActivity.Sleep(100);
+								Sleeper.milliseconds(100);
 								outputStream.write(size, 0, size.length);
-								MainActivity.Sleep(100);
+								Sleeper.milliseconds(100);
 								outputStream.write(temp, 0, temp.length);
 								outputStream.flush();
 							} catch (IOException ex) {
