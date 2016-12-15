@@ -260,7 +260,7 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	void Sleep(int i) {
+	static void Sleep(int i) {
 		try {
 			TimeUnit.MILLISECONDS.sleep(i);
 		} catch (InterruptedException e) {
@@ -391,25 +391,16 @@ public class MainActivity extends Activity {
 			Toast.makeText(MainActivity.this, "isConnected", Toast.LENGTH_SHORT).show();
 			btn_connect.setText(R.string.btn_disconnect);
 		}
-		//посылается картинка
-		/*if(edit_send.getText().toString().equals("1")) {
-			getRealPathFromURI(this, imageUri);
+		try {
 			Message msg = new Message();
-			msg.what = 0x800;
-			msg.obj = getRealPathFromURI(this, imageUri);
+			msg.what = 0x852;
+			msg.obj = edit_send.getText().toString();
 			clientThread.sendHandler.sendMessage(msg);
 			edit_send.setText("");
-		}else { //сообщение чата*/
-			try {
-				Message msg = new Message();
-				msg.what = 0x852;
-				msg.obj = edit_send.getText().toString();
-				clientThread.sendHandler.sendMessage(msg);
-				edit_send.setText("");
-			} catch (Exception e) {
-				Log.d(TAG, e.getMessage());
-				e.printStackTrace();
-			//}
+		} catch (Exception e) {
+			Log.d(TAG, e.getMessage());
+			e.printStackTrace();
+
 		}
 	}
 
@@ -436,5 +427,10 @@ public class MainActivity extends Activity {
 		msg.what = 0x800;
 		msg.obj = imagePath;
 		clientThread.sendHandler.sendMessage(msg);
+
+		imageUri = null;
+		imageView.setImageResource(0);
+		tvGalleryChoice.clearComposingText();
+		Toast.makeText(this, "Image sending!", Toast.LENGTH_SHORT).show();
 	}
 }

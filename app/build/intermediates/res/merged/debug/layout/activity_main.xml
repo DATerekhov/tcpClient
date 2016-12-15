@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/edit_ip"
+            android:focusable="false"
             >
 
         </EditText>
