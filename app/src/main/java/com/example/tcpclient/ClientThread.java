@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -25,6 +26,8 @@ public class ClientThread implements Runnable
 	private InputStream inputStream;
 	private OutputStream outputStream;
 	public boolean isConnect = false;
+	File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+			Environment.DIRECTORY_PICTURES), "CameraSample");
 
 	public ClientThread(Handler handler, String ip, String port) {
 		this.receiveHandler = handler;
@@ -143,7 +146,7 @@ public class ClientThread implements Runnable
 							switch (code)
 							{
 								case 800:
-									//File.WriteAllBytes("firstImage.jpg", newTemp);
+									Converter.BytesToFile(newTemp, mediaStorageDir.getPath()+ File.separator + "img.jpg");
 									break;
 								case 852:
 									stringBuilder.append(new String(newTemp, 0, newTemp.length) + "\n");

@@ -321,10 +321,6 @@ public class MainActivity extends Activity {
 	}
 
 	public void bSend_Click(View view) {
-		/*if (clientThread.isConnect) {
-			Toast.makeText(MainActivity.this, "isConnected", Toast.LENGTH_SHORT).show();
-			btn_connect.setText(R.string.btn_disconnect);
-		}*/
 		try {
 			Message msg = new Message();
 			msg.what = 0x852;
