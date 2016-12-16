@@ -141,7 +141,7 @@ public class CameraHelper {
 		}
 
 		File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-				Environment.DIRECTORY_PICTURES), "CameraSample");
+				Environment.DIRECTORY_DCIM), "Camera");
 		// This location works best if you want the created images to be shared
 		// between applications and persist after your app has been uninstalled.
 
@@ -161,7 +161,7 @@ public class CameraHelper {
 					"IMG_"+ timeStamp + ".jpg");
 		} else if(type == MEDIA_TYPE_VIDEO) {
 			mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-					"VID_"+ timeStamp + ".mp4");
+					"V_"+ timeStamp + ".mp4");
 		} else {
 			return null;
 		}

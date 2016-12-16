@@ -190,8 +190,8 @@ public class MainActivity extends Activity {
 
 	public void galleryChoiceClick(View view) {
 
-		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-		photoPickerIntent.setType("image/*");
+		Intent photoPickerIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		photoPickerIntent.setType("image/* video/*");
 		startActivityForResult(photoPickerIntent, REQUEST_CODE_GALLERY);
 	}
 
@@ -204,7 +204,7 @@ public class MainActivity extends Activity {
 				if (resultCode == RESULT_OK) {
 					imageUri = null;
 					imageUri = data.getData();
-					imageView.setImageURI(imageUri);
+					//imageView.setImageURI(imageUri);
 					String KEK = getRealPathFromURI(this, imageUri);
 					tvGalleryChoice.setText(KEK);
 

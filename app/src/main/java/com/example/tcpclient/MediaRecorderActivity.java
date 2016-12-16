@@ -31,8 +31,8 @@ public class MediaRecorderActivity extends AppCompatActivity {
 	private static final String TAG = "Recorder";
 	private Button captureButton;
 
-	File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
-			Environment.DIRECTORY_PICTURES), "CameraSample");
+	//File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(
+	//		Environment.DIRECTORY_DCIM), "Camera");
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +58,8 @@ public class MediaRecorderActivity extends AppCompatActivity {
 			// stop recording and release camera
 			try {
 				mMediaRecorder.stop();  // stop the recording
-				byte[] tempFileBytes = Converter.FileToBytes(mOutputFile.getPath());
-				Converter.BytesToFile(tempFileBytes, mediaStorageDir.getPath()+ File.separator + "VID_");
+				//byte[] tempFileBytes = Converter.FileToBytes(mOutputFile.getPath());
+				//Converter.BytesToFile(tempFileBytes, mediaStorageDir.getPath()+ File.separator + mOutputFile.getName());
 			} catch (RuntimeException e) {
 				// RuntimeException is thrown when stop() is called immediately after start().
 				// In this case the output file is not properly constructed ans should be deleted.

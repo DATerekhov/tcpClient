@@ -16,7 +16,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="59e6a452f06ac4c1474ae1e13d82851b4da46cd7">
+        sha1="d518867c6e7e29ff23cb4b730242591c912a40d3">
         <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_6c2ea3de8187d832cba1049c6f11c596ea048c8a\classes.dex" />
     </item>
     <item
@@ -133,7 +133,7 @@
         jumboMode="true"
         optimize="true"
         revision="24.0.2"
-        sha1="603aec341e7196e56a8cbf29c3cb494e6862a868">
+        sha1="b58e29ffe3f9e10cf27955a850a527c0e6d93213">
         <dex dex="C:\Users\Dmitry Terekhov\Desktop\testPut\TcpClient\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_62a6c03f11ab38a0748e85e9e616785287c0399c\classes.dex" />
     </item>
     <item
