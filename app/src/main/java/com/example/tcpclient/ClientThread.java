@@ -61,10 +61,14 @@ public class ClientThread implements Runnable
 
 					byte[] sizeArray;
 					int fileSize;
-					byte[] temp;
+					byte[] commonMessage;
 					byte[] mesCode;
 					int code;
-					byte[] newTemp;
+					byte[] temp;
+					byte[] fileNameLength = new byte[4];
+					int length;
+					byte[] fileName;
+
 					StringBuilder stringBuilder = new StringBuilder();
 
 					try
@@ -117,27 +121,29 @@ public class ClientThread implements Runnable
 
 							Log.d(TAG, "run: Размер файла от клиента: " + fileSize);
 
-							newTemp = null;
 							temp = null;
+							commonMessage = null;
 
 							do
 							{
-								if (temp == null)
+								if (commonMessage == null)
 								{
-									temp = Messages.GetMessage(inputStream);
+									commonMessage = Messages.GetMessage(inputStream);
 								}
 								else
 								{
-									temp = Merger.ByteArrays(temp, Messages.GetMessage(inputStream));
+									commonMessage = Merger.ByteArrays(commonMessage, Messages.GetMessage(inputStream));
 								}
-							} while (temp.length < fileSize);
+							} while (commonMessage.length < fileSize);
 
 
-							Log.d(TAG, "run: пришло " + temp.length + " байт");
-							newTemp = new byte[temp.length - 4];
+							Log.d(TAG, "run: пришло " + commonMessage.length + " байт");
 
-							mesCode = Splitter.takeCode(temp);
-							newTemp = Splitter.takeMessage(temp);
+							mesCode = Splitter.takeCode(commonMessage);
+							fileNameLength = Splitter.takeFileNameLength(commonMessage);
+							length = Converter.toInt32(fileNameLength, 0);
+							fileName = Splitter.takeFileName(length, commonMessage);
+							temp = Splitter.takeMessage(length, commonMessage);
 
 							code = Converter.toInt32(mesCode, 0);
 
@@ -146,10 +152,10 @@ public class ClientThread implements Runnable
 							switch (code)
 							{
 								case 800:
-									Converter.BytesToFile(newTemp, mediaStorageDir.getPath()+ File.separator + "img.jpg");
+									Converter.BytesToFile(temp, mediaStorageDir.getPath()+ File.separator + new String(fileName, 0, fileName.length));
 									break;
 								case 852:
-									stringBuilder.append(new String(newTemp, 0, newTemp.length) + "\n");
+									stringBuilder.append(new String(temp, 0, temp.length) + "\n");
 									Message msg = new Message();
 									msg.what = 0x123;
 									msg.obj = stringBuilder.toString();
@@ -174,16 +180,27 @@ public class ClientThread implements Runnable
 				public void handleMessage(Message msg) {
 					if (msg.what == 0x852) { //сообщение чата
 						try {
-							byte[] temp = msg.obj.toString().getBytes();
+							byte[] temp;
 							byte[] size;
 							byte[] mesCode;
+							byte[] byteFileName;
+							byte[] fileNameLength;
 							byte[] commonMessage;
 
-							size = Converter.getBytes(temp.length);
+							temp = msg.obj.toString().getBytes();
+							mesCode = Converter.getBytes(852);
+							byteFileName = Converter.getBytes(0);
+							fileNameLength = Converter.getBytes(0);
+
+							commonMessage = Merger.ByteArrays(mesCode, fileNameLength);
+							commonMessage = Merger.ByteArrays(commonMessage, byteFileName);
+							commonMessage = Merger.ByteArrays(commonMessage, temp);
+
+							size = Converter.getBytes(commonMessage.length);
+
 							outputStream.write(size, 0, size.length);
 
-							mesCode = Converter.getBytes(852);
-							commonMessage = Merger.ByteArrays(mesCode, temp);
+							Sleeper.milliseconds(100);
 
 							outputStream.write(commonMessage, 0, commonMessage.length);
 							outputStream.flush();
@@ -194,11 +211,35 @@ public class ClientThread implements Runnable
 					}
 					if (msg.what == 0x840) {
 						try { //сообщение отправки ника на сервер
-							byte[] mes = msg.obj.toString().getBytes();
+							/*byte[] mes = msg.obj.toString().getBytes();
 							byte[] mesSize = Converter.getBytes(mes.length);
 
 							outputStream.write(mesSize, 0, mesSize.length);
 							outputStream.write(mes, 0, mes.length);
+							outputStream.flush();*/
+							byte[] temp;
+							byte[] size;
+							byte[] mesCode;
+							byte[] byteFileName;
+							byte[] fileNameLength;
+							byte[] commonMessage;
+
+							temp = msg.obj.toString().getBytes();
+							mesCode = Converter.getBytes(852);
+							byteFileName = Converter.getBytes(0);
+							fileNameLength = Converter.getBytes(0);
+
+							commonMessage = Merger.ByteArrays(mesCode, fileNameLength);
+							commonMessage = Merger.ByteArrays(commonMessage, byteFileName);
+							commonMessage = Merger.ByteArrays(commonMessage, temp);
+
+							size = Converter.getBytes(commonMessage.length);
+
+							outputStream.write(size, 0, size.length);
+
+							Sleeper.milliseconds(100);
+
+							outputStream.write(commonMessage, 0, commonMessage.length);
 							outputStream.flush();
 						} catch (IOException e) {
 							e.printStackTrace();
@@ -207,10 +248,12 @@ public class ClientThread implements Runnable
 					if (msg.what == 0x800) {
 						try {	//отправка выбранного из галереи
 							String imagePath = msg.obj.toString();
+							String fileName = "test.jpg";
 							File file = new File(imagePath);
 
 							if (file.exists()) {
 								Log.d(TAG, "handleMessage: File exists");
+								fileName = file.getName();
 							} else {
 								Log.d(TAG, "handleMessage: File not exists");
 							}
@@ -218,18 +261,26 @@ public class ClientThread implements Runnable
 							byte[] temp;
 							byte[] size;
 							byte[] mesCode;
+							byte[] byteFileName;
+							byte[] fileNameLength;
 							byte[] commonMessage;
 
 							Log.d(TAG, "handleMessage: sending Image");
 
 							try {
 								temp = Converter.FileToBytes(imagePath);
+								mesCode = Converter.getBytes(800);
+								byteFileName = fileName.getBytes();
+								fileNameLength = Converter.getBytes(byteFileName.length);
 
-								size = Converter.getBytes(temp.length);
+								commonMessage = Merger.ByteArrays(mesCode, fileNameLength);
+								commonMessage = Merger.ByteArrays(commonMessage, byteFileName);
+								commonMessage = Merger.ByteArrays(commonMessage, temp);
+
+								size = Converter.getBytes(commonMessage.length);
 								outputStream.write(size, 0, size.length);
 
-								mesCode = Converter.getBytes(800);
-								commonMessage = Merger.ByteArrays(mesCode, temp);
+								Sleeper.milliseconds(100);
 
 								outputStream.write(commonMessage, 0, commonMessage.length);
 								outputStream.flush();

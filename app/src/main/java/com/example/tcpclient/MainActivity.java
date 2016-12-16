@@ -296,9 +296,6 @@ public class MainActivity extends Activity {
 		new Thread(clientThread).start();
 		Log.d(TAG, "clientThread is start!!");
 
-			//Intent intent = new Intent(this, LoginActivity.class);
-			//startActivityForResult(intent, REQUEST_CODE_LOGIN);
-
 		Handler handler = new Handler();    //отложенный вызов
 		handler.postDelayed(new Runnable() {
 			@Override
