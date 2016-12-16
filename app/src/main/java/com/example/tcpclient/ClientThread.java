@@ -1,25 +1,17 @@
 package com.example.tcpclient;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Serializable;
-import java.net.InetAddress;
 import java.net.Socket;
-import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
-import java.net.URLEncoder;
 import java.net.UnknownHostException;
 
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.EditText;
 
 public class ClientThread implements Runnable
 {
@@ -63,32 +55,107 @@ public class ClientThread implements Runnable
 				@Override
 				public void run()
 				{
-					byte[] buffer = new byte[1024];
 
+					byte[] sizeArray;
+					int fileSize;
+					byte[] temp;
+					byte[] mesCode;
+					int code;
+					byte[] newTemp;
 					StringBuilder stringBuilder = new StringBuilder();
+
 					try
 					{
 						while(socket.isConnected())
 						{
-							int readSize = inputStream.read(buffer);
-							Log.d(TAG, "readSize:" + readSize);
-							
-							//If Server is stopping
-							if(readSize == -1)
+							/*
+							mesCode = Messages.GetMessage(inputStream);
+							code = Converter.toInt32(mesCode, 0);
+							Log.d(TAG, "run: Код сщщбщения " + code);
+
+							sizeArray = Messages.GetMessage(inputStream);
+							fileSize = Converter.toInt32(sizeArray, 0);
+							Log.d(TAG, "Размер сообщения: " + fileSize);
+
+							if(fileSize == -1)
 							{
 								inputStream.close();
 								outputStream.close();
 							}
-							if(readSize == 0)continue;
+							if(fileSize == 0)continue;
 
-							stringBuilder.append(new String(buffer, 0, readSize));
-							Message msg = new Message();
-							msg.what = 0x123;
-							msg.obj = stringBuilder.toString();
-							receiveHandler.sendMessage(msg);
+							temp = null;
+							do
+							{
+								if (temp == null)
+								{
+									temp = Messages.GetMessage(inputStream);
+								}
+								else
+								{
+									temp = Merger.ByteArrays(temp, Messages.GetMessage(inputStream));
+								}
+							} while (temp.length < fileSize);
+
+							Log.d(TAG, "принято: " + temp.length + " байт");
+
+							switch (code){
+								case 852:
+									stringBuilder.append(new String(temp, 0, fileSize) + "\n");
+									Message msg = new Message();
+									msg.what = 0x123;
+									msg.obj = stringBuilder.toString();
+									receiveHandler.sendMessage(msg);
+									break;
+							}
+							*/
+							sizeArray = Messages.GetMessage(inputStream);
+							fileSize = Converter.toInt32(sizeArray, 0);
+
+							Log.d(TAG, "run: Размер файла от клиента: " + fileSize);
+
+							newTemp = null;
+							temp = null;
+
+							do
+							{
+								if (temp == null)
+								{
+									temp = Messages.GetMessage(inputStream);
+								}
+								else
+								{
+									temp = Merger.ByteArrays(temp, Messages.GetMessage(inputStream));
+								}
+							} while (temp.length < fileSize);
+
+
+							Log.d(TAG, "run: пришло " + temp.length + " байт");
+							newTemp = new byte[temp.length - 4];
+
+							mesCode = Splitter.takeCode(temp);
+							newTemp = Splitter.takeMessage(temp);
+
+							code = Converter.toInt32(mesCode, 0);
+
+							Log.d(TAG, "run: Код сообщения: " + code);
+
+							switch (code)
+							{
+								case 800:
+									//File.WriteAllBytes("firstImage.jpg", newTemp);
+									break;
+								case 852:
+									stringBuilder.append(new String(newTemp, 0, newTemp.length) + "\n");
+									Message msg = new Message();
+									msg.what = 0x123;
+									msg.obj = stringBuilder.toString();
+									receiveHandler.sendMessage(msg);
+									break;
+							}
 						}
 					}
-					catch(IOException e)
+					catch(Exception e)
 					{
 						Log.d(TAG, e.getMessage());
 						e.printStackTrace();
@@ -104,15 +171,18 @@ public class ClientThread implements Runnable
 				public void handleMessage(Message msg) {
 					if (msg.what == 0x852) { //сообщение чата
 						try {
-							byte[] mes = msg.obj.toString().getBytes();
-							byte[] mesSize = Converter.getBytes(mes.length);
-							byte[] mesCode = Converter.getBytes(852);
+							byte[] temp = msg.obj.toString().getBytes();
+							byte[] size;
+							byte[] mesCode;
+							byte[] commonMessage;
 
-							outputStream.write(mesCode, 0, mesCode.length);
-							Sleeper.milliseconds(100);
-							outputStream.write(mesSize, 0, mesSize.length);
-							Sleeper.milliseconds(100);
-							outputStream.write(mes, 0, mes.length);
+							size = Converter.getBytes(temp.length);
+							outputStream.write(size, 0, size.length);
+
+							mesCode = Converter.getBytes(852);
+							commonMessage = Merger.ByteArrays(mesCode, temp);
+
+							outputStream.write(commonMessage, 0, commonMessage.length);
 							outputStream.flush();
 						} catch (Exception e) {
 							Log.d(TAG, e.getMessage());
@@ -144,19 +214,21 @@ public class ClientThread implements Runnable
 
 							byte[] temp;
 							byte[] size;
-							byte[] mesCode = Converter.getBytes(800);
+							byte[] mesCode;
+							byte[] commonMessage;
 
 							Log.d(TAG, "handleMessage: sending Image");
 
 							try {
 								temp = Converter.FileToBytes(imagePath);
-								size = Converter.getBytes(temp.length);
 
-								outputStream.write(mesCode, 0, mesCode.length);
-								Sleeper.milliseconds(100);
+								size = Converter.getBytes(temp.length);
 								outputStream.write(size, 0, size.length);
-								Sleeper.milliseconds(100);
-								outputStream.write(temp, 0, temp.length);
+
+								mesCode = Converter.getBytes(800);
+								commonMessage = Merger.ByteArrays(mesCode, temp);
+
+								outputStream.write(commonMessage, 0, commonMessage.length);
 								outputStream.flush();
 							} catch (IOException ex) {
 								ex.printStackTrace();

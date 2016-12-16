@@ -47,30 +47,22 @@ public class testConnection {
 		}
 	}*/
 	// отправка сообщений
-	static void SendMessage()
-	{
+	static void SendMessage() {
 		File file = new File("buch.djvu");
 		byte[] temp;
 		byte[] size;
 
-		while (true)
-		{
-			System.out.println("Ent?");
-			try
-			{
-				System.in.read();
+		System.out.println("Ent?");
+		try {
+			temp = FileToBytes("buch.djvu");
+			size = getBytes(temp.length);
 
-				temp = FileToBytes("buch.djvu");
-				size = getBytes(temp.length);
-
-				os.write(size, 0, size.length);
-				os.write(temp, 0, temp.length);
-			}
-			catch (IOException ex)
-			{
-				ex.printStackTrace();
-			}
+			os.write(size, 0, size.length);
+			os.write(temp, 0, temp.length);
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
+
 	}
 
 	static byte[] FileToBytes(String path)

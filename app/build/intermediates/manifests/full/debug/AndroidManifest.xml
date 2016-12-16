@@ -41,6 +41,8 @@
         </activity>
         <activity android:name="com.example.tcpclient.ChatActivity" >
         </activity>
+        <activity android:name="com.example.tcpclient.LoginActivity" >
+        </activity>
     </application>
 
 </manifest>

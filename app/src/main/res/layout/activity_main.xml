@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+              android:focusable="false"
     tools:context=".MainActivity" >
 <ScrollView
     android:layout_width="match_parent"
@@ -30,7 +31,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="@string/edit_ip"
-            android:focusable="false"
             >
 
         </EditText>
@@ -49,12 +49,28 @@
             android:hint="@string/edit_port"
             android:inputType="number" />
 
-        <Button
-            android:id="@+id/btn_connect"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/btn_connect"
-            android:onClick="bConnect_Click"/>
+            >
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:text="Name"
+                android:id="@+id/etLoginName"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_connect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_connect"
+                android:onClick="bConnect_Click"
+                />
+        </LinearLayout>
 
 
         <TextView
@@ -62,47 +78,79 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_receive" />
-
+            <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <EditText
             android:id="@+id/edit_receive"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textMultiLine"
-            android:text="@string/edit_receive" />
-
+            android:text="@string/edit_receive"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:height="200dp"
+            android:textSize="16sp"
+            />
+            </ScrollView>
         <TextView
             android:id="@+id/txt_send"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/txt_send" />
 
-        <EditText
-            android:id="@+id/edit_send"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:text="@string/edit_send" />
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/btn_send"
-            android:onClick="bSend_Click"/>
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/edit_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="@string/edit_send"
+                android:layout_weight="1"/>
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_send"
+                android:onClick="bSend_Click"
+                android:layout_weight="3"/>
+        </LinearLayout>
 
         <Button
-            android:text="testCamera"
+            android:text="recordVideo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/bTest"
             android:onClick="test_Click"/>
 
-        <Button
-            android:text="takeImage"
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bGallery"
-            android:onClick="galleryChoiceClick"/>
+            android:layout_height="match_parent">
+
+            <Button
+                android:text="takeImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bGallery"
+                android:onClick="galleryChoiceClick"
+                android:layout_weight="1"/>
+
+            <Button
+                android:text="SendImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/bSendImage"
+                android:onClick="bSendImage_Click"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
         <TextView
             android:text="imagePath"
@@ -115,13 +163,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView"/>
-
-        <Button
-            android:text="SendImage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/bSendImage"
-            android:onClick="bSendImage_Click"/>
 
     </LinearLayout>
     </ScrollView>

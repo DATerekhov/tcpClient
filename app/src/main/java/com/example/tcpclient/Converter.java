@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -56,6 +57,37 @@ public class Converter {
 		}
 
 		return out.toByteArray();
+	}
+	static void BytesToFile(byte[] bytes, String path)
+	{
+		FileOutputStream out = null;
+		try
+		{
+			out = new FileOutputStream(path);
+			out.write(bytes, 0, bytes.length);
+		}
+		catch (FileNotFoundException ex)
+		{
+			ex.printStackTrace();
+		}
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(out != null)
+				{
+					out.close();
+				}
+			}
+			catch (IOException ex)
+			{
+				ex.printStackTrace();
+			}
+		}
 	}
 	static byte[] getBytes(int v)
 	{

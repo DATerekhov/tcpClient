@@ -44,15 +44,17 @@ public class MainActivity extends Activity {
 	final String DIR_SD = "MyFiles";
 	final String FILENAME_SD = "fileSD";
 	private final int REQUEST_CODE_GALLERY = 1;
+	private final int REQUEST_CODE_LOGIN = 2;
 
 	SharedPreferences sPref;
 	private static Uri imageUri = null;
+	private EditText etLoginName;
 
 	private EditText edit_ip = null;
 	private EditText edit_port = null;
 	private Button btn_connect = null;
 	private Button bGallery = null;
-	private EditText edit_receive = null;
+	private static EditText edit_receive = null;
 	private EditText edit_send = null;
 	private Button btn_send = null;
 	private TextView tvIP;
@@ -81,9 +83,17 @@ public class MainActivity extends Activity {
 		tvGalleryChoice = (TextView) findViewById(R.id.tvGalleryChoice);
 		imageView = (ImageView) findViewById(R.id.imageView);
 		bSendImage = (Button)findViewById(R.id.bSendImage);
+		etLoginName = (EditText)findViewById(R.id.etLoginName);
 
 		init();
 		Animat();
+
+		if(clientThread != null){
+			if(clientThread.isConnect){
+				btn_connect.setText("Disconnect");
+				btn_connect.setEnabled(false);
+			}
+		}
 	}
 
 	@Override
@@ -186,14 +196,14 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-		super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(data == null)return;
 		switch (requestCode) {
 			case REQUEST_CODE_GALLERY:
 				if (resultCode == RESULT_OK) {
 					imageUri = null;
-					imageUri = imageReturnedIntent.getData();
+					imageUri = data.getData();
 					imageView.setImageURI(imageUri);
 					String KEK = getRealPathFromURI(this, imageUri);
 					tvGalleryChoice.setText(KEK);
@@ -205,6 +215,11 @@ public class MainActivity extends Activity {
 					} else
 						Log.d(TAG, "onActivityResult: File Not Exist");
 				}
+			case REQUEST_CODE_LOGIN:
+				if (resultCode == RESULT_OK){
+
+				}
+				break;
 		}
 	}
 
@@ -261,6 +276,13 @@ public class MainActivity extends Activity {
 	}
 
 	public void bConnect_Click(View view) {
+		if(clientThread != null){
+			if(clientThread.isConnect){
+				btn_connect.setText(R.string.btn_disconnect);
+				btn_connect.setEnabled(false);
+				return;
+			}
+		}
 		String ip = edit_ip.getText().toString();
 		String port = edit_port.getText().toString();
 
@@ -268,9 +290,14 @@ public class MainActivity extends Activity {
 
 		Log.d(TAG, ip + port);
 
+		if(etLoginName.getText().toString().isEmpty())return;
+
 		clientThread = new ClientThread(handler, ip, port);
 		new Thread(clientThread).start();
 		Log.d(TAG, "clientThread is start!!");
+
+			//Intent intent = new Intent(this, LoginActivity.class);
+			//startActivityForResult(intent, REQUEST_CODE_LOGIN);
 
 		Handler handler = new Handler();    //отложенный вызов
 		handler.postDelayed(new Runnable() {
@@ -280,7 +307,7 @@ public class MainActivity extends Activity {
 					if (clientThread.isConnect) {
 						Message msg = new Message();
 						msg.what = 0x840;
-						msg.obj = "Nickname";
+						msg.obj = etLoginName.getText().toString();
 						clientThread.sendHandler.sendMessage(msg);
 						Log.d(TAG, "Message nickname send!");
 
@@ -290,14 +317,14 @@ public class MainActivity extends Activity {
 					e.printStackTrace();
 				}
 			}
-		}, 1500);
+		}, 1000);
 	}
 
 	public void bSend_Click(View view) {
-		if (clientThread.isConnect) {
+		/*if (clientThread.isConnect) {
 			Toast.makeText(MainActivity.this, "isConnected", Toast.LENGTH_SHORT).show();
 			btn_connect.setText(R.string.btn_disconnect);
-		}
+		}*/
 		try {
 			Message msg = new Message();
 			msg.what = 0x852;

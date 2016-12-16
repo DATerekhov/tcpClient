@@ -15,7 +15,6 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.tcpclient.media.CameraHelper;
-import com.example.tcpclient.FileBitConvert;
 
 import java.io.File;
 import java.io.IOException;
@@ -59,8 +58,8 @@ public class MediaRecorderActivity extends AppCompatActivity {
 			// stop recording and release camera
 			try {
 				mMediaRecorder.stop();  // stop the recording
-				byte[] tempFileBytes = FileBitConvert.FileToBytes(mOutputFile.getPath());
-				FileBitConvert.BytesToFile(tempFileBytes, mediaStorageDir.getPath()+ File.separator + "VID_");
+				byte[] tempFileBytes = Converter.FileToBytes(mOutputFile.getPath());
+				Converter.BytesToFile(tempFileBytes, mediaStorageDir.getPath()+ File.separator + "VID_");
 			} catch (RuntimeException e) {
 				// RuntimeException is thrown when stop() is called immediately after start().
 				// In this case the output file is not properly constructed ans should be deleted.
